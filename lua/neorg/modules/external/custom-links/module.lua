@@ -62,9 +62,7 @@ module.private = {
     link_clicked = function ()
         local node = vim.treesitter.get_node()
         local link = module.private.get_link_root(node)
-        vim.print(link:type())
         local details = module.private.get_link_details(link)
-        vim.print(details)
 
         for _, attr in ipairs(details.attrs) do
             if module.config.public.handlers[attr] ~= nil then
