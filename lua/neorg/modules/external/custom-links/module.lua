@@ -61,7 +61,17 @@ module.private = {
 
     link_clicked = function ()
         local node = vim.treesitter.get_node()
+        
+        if node == nil then
+            return
+        end
+
         local link = module.private.get_link_root(node)
+
+        if link == nil then
+            return
+        end
+
         local details = module.private.get_link_details(link)
 
         for _, attr in ipairs(details.attrs) do
