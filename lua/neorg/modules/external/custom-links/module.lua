@@ -4,6 +4,7 @@ local module = neorg.modules.create('external.custom-links')
 
 module.load = function ()
     -- If I ever needed the load function
+    vim.keymap.set("", "<Plug>(neorg.esupports.hop.hop-link)", module.private.link_clicked)
 end
 
 module.config.public = {
@@ -61,7 +62,7 @@ module.private = {
 
     link_clicked = function ()
         local node = vim.treesitter.get_node()
-        
+
         if node == nil then
             return
         end
@@ -80,18 +81,6 @@ module.private = {
             end
         end
     end,
-}
-
-module.on_event = function (event)
-    if event.split_type[2] == "core.esupports.hop.hop-link" then
-        module.private.link_clicked()
-    end
-end
-
-module.events.subscribed = {
-    ["core.keybinds"] = {
-        ["core.esupports.hop.hop-link"] = true,
-    },
 }
 
 return module
