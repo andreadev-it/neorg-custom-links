@@ -2,6 +2,14 @@ local neorg = require('neorg.core')
 
 local module = neorg.modules.create('external.custom-links')
 
+module.setup = function ()
+    return {
+        requires = {
+            'core.esupports.hop'
+        }
+    }
+end
+
 module.load = function ()
     -- If I ever needed the load function
     vim.keymap.set("", "<Plug>(neorg.esupports.hop.hop-link)", module.private.link_clicked)
@@ -78,8 +86,11 @@ module.private = {
         for _, attr in ipairs(details.attrs) do
             if module.config.public.handlers[attr] ~= nil then
                 module.config.public.handlers[attr](details)
+                return
             end
         end
+
+        module.required['core.esupports.hop'].hop_link()
     end,
 }
 
